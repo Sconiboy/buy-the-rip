@@ -1192,6 +1192,13 @@
         function updateLookupsDisplay() {
             if (!currentUser) return;
 
+            // Admin has unlimited lookups
+            if (currentUser.email === ADMIN_EMAIL) {
+                document.getElementById('lookupsRemaining').style.display = 'none';
+                document.getElementById('upgradePrompt').style.display = 'none';
+                return;
+            }
+
             const plan = subscriptions[currentUser.id] || 'free';
             const lookupsUsed = lookupCounts[currentUser.id] || 0;
             const lookupsRemaining = document.getElementById('lookupsRemaining');
