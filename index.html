@@ -1076,6 +1076,11 @@
                     </tbody>
                 </table>
             </div>
+
+            <h3 style="margin: 2rem 0;">Top Stocks Analyzed</h3>
+            <div id="topStocksContainer" style="min-height: 200px;">
+                <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No stocks analyzed yet</p>
+            </div>
         </div>
     </div>
 
@@ -1167,7 +1172,7 @@
             const userMenu = document.getElementById('userMenu');
             const authButtons = document.getElementById('authButtons');
             const settingsNav = document.getElementById('settingsNav');
-            const adminNav = document.getElementById('adminNav');
+            const adminLink = document.getElementById('adminLink');
 
             if (currentUser) {
                 userMenu.style.display = 'flex';
@@ -1175,8 +1180,8 @@
                 document.getElementById('userName').textContent = currentUser.email;
                 settingsNav.style.display = 'block';
 
-                if (currentUser.email === 'admin@buytherip.com') {
-                    adminNav.style.display = 'block';
+                if (currentUser.email === ADMIN_EMAIL) {
+                    adminLink.style.display = 'block';
                     updateAdminDashboard();
                 }
 
@@ -1186,7 +1191,7 @@
                 userMenu.style.display = 'none';
                 authButtons.style.display = 'block';
                 settingsNav.style.display = 'none';
-                adminNav.style.display = 'none';
+                adminLink.style.display = 'none';
             }
         }
 
@@ -1249,14 +1254,40 @@
 
             // Update users table
             const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = users.map(user => `
-                <tr>
-                    <td>${user.email}</td>
-                    <td>${(subscriptions[user.id] || 'free').charAt(0).toUpperCase() + (subscriptions[user.id] || 'free').slice(1)}</td>
-                    <td>${lookupCounts[user.id] || 0}</td>
-                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
-                </tr>
-            `).join('');
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No users yet</td></tr>';
+            } else {
+                tbody.innerHTML = users.map(user => {
+                    const plan = subscriptions[user.id] || 'free';
+                    const lookups = lookupCounts[user.id] || 0;
+                    return `
+                        <tr>
+                            <td><strong>${user.email}</strong></td>
+                            <td>${plan.charAt(0).toUpperCase() + plan.slice(1)}</td>
+                            <td>${lookups}</td>
+                            <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Get top stocks analyzed
+            const stockLookups = JSON.parse(localStorage.getItem('stockLookups')) || {};
+            const topStocks = Object.entries(stockLookups)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            const stocksContainer = document.getElementById('topStocksContainer');
+            if (topStocks.length === 0) {
+                stocksContainer.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No stocks analyzed yet</p>';
+            } else {
+                let html = '<div class="table-container"><table><thead><tr><th>Stock Symbol</th><th>Times Analyzed</th></tr></thead><tbody>';
+                topStocks.forEach(([symbol, count]) => {
+                    html += '<tr><td><strong>' + symbol + '</strong></td><td>' + count + '</td></tr>';
+                });
+                html += '</tbody></table></div>';
+                stocksContainer.innerHTML = html;
+            }
         }
 
         function subscribeToPlan(plan) {
@@ -1310,9 +1341,11 @@
             fetch(`${API_URL}/${symbol}`)
                 .then(r => r.json())
                 .then(data => {
-                    // Only increment lookups for non-admin users
+                    var stockLookups = JSON.parse(localStorage.getItem('stockLookups')) || {};
+                    stockLookups[symbol] = (stockLookups[symbol] || 0) + 1;
+                    localStorage.setItem('stockLookups', JSON.stringify(stockLookups));
                     if (currentUser.email !== ADMIN_EMAIL) {
-                        const lookupsUsed = lookupCounts[currentUser.id] || 0;
+                        var lookupsUsed = lookupCounts[currentUser.id] || 0;
                         lookupCounts[currentUser.id] = lookupsUsed + 1;
                         localStorage.setItem('lookupCounts', JSON.stringify(lookupCounts));
                         updateLookupsDisplay();
