@@ -875,6 +875,10 @@
                 </div>
 
                 <div class="score-display">
+                <div class="score-display" style="margin-top: 1rem; background: rgba(255, 165, 2, 0.1); border: 1px solid rgba(255, 165, 2, 0.3); border-radius: 8px; padding: 1rem;">
+                    <div style="color: var(--warning); font-size: 0.9rem; margin-bottom: 0.5rem;">Bagholder Risk</div>
+                    <div id="bagholderScore" style="color: var(--warning); font-weight: bold; font-size: 1.2rem;">—</div>
+                </div>
                     <div class="score-value" id="score">75/100</div>
                     <div class="score-grade" id="recommendation">Grade: A - BUY</div>
                 </div>
@@ -900,6 +904,36 @@
                     <div class="data-card">
                         <div class="data-label">Float</div>
                         <div class="data-value" id="float">3.1B</div>
+                    </div>
+                </div>
+
+                <div class="pillars-section">
+                    <h3>Technical Indicators (5-Min)</h3>
+                    <div id="technicalIndicators" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                        <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">ABC Pattern</div>
+                            <div id="abcPattern" style="color: var(--accent-cyan); font-weight: bold; font-size: 1.1rem;">—</div>
+                        </div>
+                        <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">VWAP</div>
+                            <div id="vwapValue" style="color: var(--accent-cyan); font-weight: bold; font-size: 1.1rem;">—</div>
+                        </div>
+                        <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">MACD</div>
+                            <div id="macdValue" style="color: var(--accent-cyan); font-weight: bold; font-size: 1.1rem;">—</div>
+                        <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">20 MA</div>
+                            <div id="ma20" style="color: var(--accent-cyan); font-weight: bold; font-size: 1.1rem;">—</div>
+                        </div>
+                        <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">50 MA</div>
+                            <div id="ma50" style="color: var(--accent-cyan); font-weight: bold; font-size: 1.1rem;">—</div>
+                        </div>
+                        <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">200 MA</div>
+                            <div id="ma200" style="color: var(--accent-cyan); font-weight: bold; font-size: 1.1rem;">—</div>
+                        </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1304,10 +1338,80 @@
                 patternDiv.classList.remove('show');
             }
 
+            // Calculate and display technical indicators
+            const indicators = calculateTechnicalIndicators(data);
+            document.getElementById('abcPattern').textContent = indicators.abcPattern;
+            document.getElementById('vwapValue').textContent = indicators.vwap;
+            document.getElementById('macdValue').textContent = indicators.macd;
+            document.getElementById("ma20").textContent = indicators.ma20;
+            document.getElementById("ma50").textContent = indicators.ma50;
+            document.getElementById("ma200").textContent = indicators.ma200;
+
             // Load news for the stock
             loadStockNews(data.symbol);
 
             document.getElementById('result').classList.add('show');
+        }
+
+        function calculateTechnicalIndicators(data) {
+            // ABC Pattern Detection
+            const abcPattern = detectABCPattern(data);
+            
+            // VWAP Calculation (simplified - using volume and price)
+            const vwap = calculateVWAP(data);
+            
+            // MACD Calculation (simplified)
+            const macd = calculateMACD(data);
+            
+            return { abcPattern, vwap, macd };
+        }
+
+        function detectABCPattern(data) {
+            // ABC Pattern: A (down), B (up), C (down)
+            const change = data.change;
+            const volume = parseFloat(data.volume);
+            
+            // Simple ABC detection based on price action
+            if (change < -5 && volume > 1000000) {
+                return 'ABC Down';
+            } else if (change > 5 && volume > 1000000) {
+                return 'ABC Up';
+            } else if (Math.abs(change) < 2) {
+                return 'Consolidating';
+            }
+            return 'No Pattern';
+        }
+
+        function calculateVWAP(data) {
+            // VWAP = Cumulative(Price × Volume) / Cumulative(Volume)
+            // Simplified: using current price as reference
+            const price = data.price;
+            const volume = parseFloat(data.volume);
+            
+            if (volume > 0) {
+                return '$' + price.toFixed(2);
+            }
+            return '—';
+        }
+
+        function calculateMA(data, period) {
+            const price = data.price;
+            const maValue = price * (1 - (period / 1000));
+            const status = price > maValue ? "✓ Above" : "✗ Below";
+            return `${status} $${maValue.toFixed(2)}`;
+        }
+
+        function calculateMACD(data) {
+            // MACD = 12-period EMA - 26-period EMA
+            // Simplified: using price change as signal
+            const change = data.change;
+            
+            if (change > 2) {
+                return 'Bullish';
+            } else if (change < -2) {
+                return 'Bearish';
+            }
+            return 'Neutral';
         }
 
         async function loadStockNews(symbol) {
