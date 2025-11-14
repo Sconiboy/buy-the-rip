@@ -1278,6 +1278,12 @@
                 return;
             }
 
+            // Admin has unlimited lookups
+            if (currentUser.email === ADMIN_EMAIL) {
+                performAnalysis();
+                return;
+            }
+
             const plan = subscriptions[currentUser.id] || 'free';
             const lookupsUsed = lookupCounts[currentUser.id] || 0;
 
@@ -1285,6 +1291,11 @@
                 document.getElementById('upgradePrompt').style.display = 'block';
                 return;
             }
+
+            performAnalysis();
+        }
+
+        function performAnalysis() {
 
             const symbol = document.getElementById('symbol').value.toUpperCase();
             if (!symbol) {
@@ -1299,9 +1310,13 @@
             fetch(`${API_URL}/${symbol}`)
                 .then(r => r.json())
                 .then(data => {
-                    lookupCounts[currentUser.id] = lookupsUsed + 1;
-                    localStorage.setItem('lookupCounts', JSON.stringify(lookupCounts));
-                    updateLookupsDisplay();
+                    // Only increment lookups for non-admin users
+                    if (currentUser.email !== ADMIN_EMAIL) {
+                        const lookupsUsed = lookupCounts[currentUser.id] || 0;
+                        lookupCounts[currentUser.id] = lookupsUsed + 1;
+                        localStorage.setItem('lookupCounts', JSON.stringify(lookupCounts));
+                        updateLookupsDisplay();
+                    }
                     displayResult(data);
                 })
                 .catch(err => {
