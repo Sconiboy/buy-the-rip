@@ -1304,7 +1304,49 @@
                 patternDiv.classList.remove('show');
             }
 
+            // Load news for the stock
+            loadStockNews(data.symbol);
+
             document.getElementById('result').classList.add('show');
+        }
+
+        async function loadStockNews(symbol) {
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = '<p style="color: var(--text-secondary);">Loading news...</p>';
+
+            try {
+                const response = await fetch(
+                    `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?modules=news`,
+                    { method: 'GET', headers: { 'User-Agent': 'Mozilla/5.0' } }
+                );
+
+                if (!response.ok) {
+                    newsContainer.innerHTML = '<p style="color: var(--text-secondary);">No news available</p>';
+                    return;
+                }
+
+                const data = await response.json();
+                const news = data.quoteSummary?.result?.[0]?.news || [];
+
+                if (news.length === 0) {
+                    newsContainer.innerHTML = '<p style="color: var(--text-secondary);">No recent news</p>';
+                    return;
+                }
+
+                newsContainer.innerHTML = news.slice(0, 3).map(item => {
+                    const date = new Date(item.pubDate * 1000).toLocaleDateString();
+                    return `<div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">${item.title}</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                            <strong>${item.source}</strong> • ${date}
+                        </p>
+                        <a href="${item.link}" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-size: 0.9rem;">Read more →</a>
+                    </div>`;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading news:', error);
+                newsContainer.innerHTML = '<p style="color: var(--text-secondary);">Error loading news</p>';
+            }
         }
 
         function detectChartPattern(data) {
