@@ -1350,6 +1350,49 @@
             document.getElementById('betaExperience').value = '';
             document.getElementById('betaSource').value = '';
         }
+        // GoDaddy Payments Integration
+        const GODADDY_API_KEY = '34Awdpcba8_4KKmdJme12FEWduvo9xATB';
+        const GODADDY_SECRET = '88QPGzP8kSptzP8gHPopw7';
+
+        async function subscribeToPlan(plan) {
+            if (!currentUser) {
+                showPage('login');
+                return;
+            }
+
+            // Show payment processing message
+            alert(`Processing ${plan} subscription payment...`);
+
+            try {
+                // Create payment intent with GoDaddy
+                const paymentData = {
+                    plan: plan,
+                    userEmail: currentUser.email,
+                    userId: currentUser.id,
+                    amount: plan === 'basic' ? 6999 : 49900, // in cents
+                    description: plan === 'basic' ? 'Buy the Rip Basic Plan' : 'Buy the Rip Deluxe Plan'
+                };
+
+                // For now, simulate successful payment
+                // In production, this would redirect to GoDaddy checkout
+                console.log('Payment data:', paymentData);
+
+                // Activate subscription
+                subscriptions[currentUser.id] = plan;
+                localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
+
+                // Reset lookup count for new subscription
+                lookupCounts[currentUser.id] = 0;
+                localStorage.setItem('lookupCounts', JSON.stringify(lookupCounts));
+
+                updateUI();
+                alert(`✓ Subscription activated! You now have ${plan} access.`);
+                showPage('app');
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment processing failed. Please try again.');
+            }
+        }
     </script>
 </body>
 </html>
