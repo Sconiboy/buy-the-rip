@@ -867,6 +867,7 @@
                     <div class="stock-symbol" id="stockSymbol">TSLA</div>
                     <div class="stock-sector" id="stockSector">Technology</div>
                     <div class="session-badge" id="sessionBadge">CLOSED</div>
+                    <div id="optionsIndicator" style="margin-left: auto; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; background: rgba(0, 212, 255, 0.1); color: var(--accent-cyan);">📊 OPTIONS: YES</div>
                 </div>
 
                 <div class="price-display">
@@ -1365,6 +1366,18 @@
             document.getElementById('stockSymbol').textContent = data.symbol;
             document.getElementById('stockSector').textContent = data.sector || 'Unknown';
             document.getElementById('sessionBadge').textContent = data.session || 'CLOSED';
+            
+            // Display options indicator
+            const optionsIndicator = document.getElementById('optionsIndicator');
+            if (data.hasOptions) {
+                optionsIndicator.textContent = '📊 OPTIONS: YES';
+                optionsIndicator.style.background = 'rgba(0, 208, 132, 0.1)';
+                optionsIndicator.style.color = 'var(--success)';
+            } else {
+                optionsIndicator.textContent = '📊 OPTIONS: NO';
+                optionsIndicator.style.background = 'rgba(255, 71, 87, 0.1)';
+                optionsIndicator.style.color = 'var(--danger)';
+            }
             document.getElementById('currentPrice').textContent = '$' + data.price.toFixed(2);
             document.getElementById('priceChange').textContent = (data.change > 0 ? '+' : '') + data.change + '%';
             document.getElementById('priceChange').className = 'price-change ' + (data.change > 0 ? 'positive' : 'negative');
