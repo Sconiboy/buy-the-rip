@@ -1367,9 +1367,11 @@
             document.getElementById('stockSector').textContent = data.sector || 'Unknown';
             document.getElementById('sessionBadge').textContent = data.session || 'CLOSED';
             
-            // Display options indicator
+            // Display options indicator - detect based on stock characteristics
             const optionsIndicator = document.getElementById('optionsIndicator');
-            if (data.hasOptions) {
+            var volumeNum = parseInt(data.volume.replace(/[^0-9]/g, '')) || 0;
+            var hasOptions = volumeNum > 100000 || data.rossScore >= 70;
+            if (hasOptions) {
                 optionsIndicator.textContent = '📊 OPTIONS: YES';
                 optionsIndicator.style.background = 'rgba(0, 208, 132, 0.1)';
                 optionsIndicator.style.color = 'var(--success)';
