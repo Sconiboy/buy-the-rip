@@ -37,9 +37,7 @@
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 1rem;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -58,7 +56,6 @@
             display: flex;
             gap: 1.5rem;
             list-style: none;
-            flex-wrap: wrap;
         }
 
         .nav-links a {
@@ -92,6 +89,12 @@
             background: var(--accent-cyan);
             border-radius: 2px;
             transition: 0.3s;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links a {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 768px) {
