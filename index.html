@@ -1343,6 +1343,25 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
+            // Check for guest user
+            if (email === 'user' && password === 'user1234') {
+                const guestUser = {
+                    id: 'guest-' + Date.now(),
+                    email: 'user@guest.local',
+                    password: 'user1234',
+                    plan: 'premium',
+                    isGuest: true,
+                    createdAt: new Date().toISOString()
+                };
+                currentUser = guestUser;
+                localStorage.setItem('currentUser', JSON.stringify(guestUser));
+                lookupCounts[guestUser.id] = -1;
+                localStorage.setItem('lookupCounts', JSON.stringify(lookupCounts));
+                updateUI();
+                showPage('app');
+                return;
+            }
+
             const user = users.find(u => u.email === email && u.password === password);
             if (!user) {
                 alert('Invalid email or password');
