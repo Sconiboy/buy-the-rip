@@ -1224,10 +1224,19 @@
         }
 
         function showPage(pageName) {
+            // Require login for app page
+            if (pageName === 'app' && !currentUser) {
+                alert('Please login to access the app');
+                showPage('login');
+                return;
+            }
+
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageName).classList.add('active');
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             document.getElementById('navLinks').classList.remove('active');
         }
 
@@ -1761,11 +1770,11 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Follow</h4>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Account</h4>
                     <ul style="list-style: none; font-size: 0.9rem;">
-                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-secondary)'">Twitter</a></li>
-                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-secondary)'">Discord</a></li>
-                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-secondary)'">YouTube</a></li>
+                        <li style="margin-bottom: 0.5rem;" id="footerLogout" style="display: none;"><a onclick="logout()" style="color: var(--text-secondary); text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-secondary)'">Logout</a></li>
+                        <li style="margin-bottom: 0.5rem;" id="footerLogin"><a onclick="showPage('login')" style="color: var(--text-secondary); text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-secondary)'">Login</a></li>
+                        <li style="margin-bottom: 0.5rem;" id="footerSignup"><a onclick="showPage('signup')" style="color: var(--text-secondary); text-decoration: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-secondary)'">Sign Up</a></li>
                     </ul>
                 </div>
             </div>
