@@ -1322,11 +1322,17 @@
 
                 updateLookupsDisplay();
                 updateSettingsPage();
+                document.getElementById('footerLogout').style.display = 'block';
+                document.getElementById('footerLogin').style.display = 'none';
+                document.getElementById('footerSignup').style.display = 'none';
             } else {
                 userMenu.style.display = 'none';
                 authButtons.style.display = 'block';
                 settingsNav.style.display = 'none';
                 adminLink.style.display = 'none';
+                document.getElementById('footerLogout').style.display = 'none';
+                document.getElementById('footerLogin').style.display = 'block';
+                document.getElementById('footerSignup').style.display = 'block';
             }
         }
 
