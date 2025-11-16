@@ -37,7 +37,9 @@
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -54,8 +56,9 @@
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
@@ -801,10 +804,10 @@
         <ul class="nav-links" id="navLinks">
             <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
             <li><a onclick="showPage('app')" class="nav-link">App</a></li>
-                    <a onclick="showPage('beta')" class="nav-link">Beta</a>
-                    <a onclick="showPage('instructions')" class="nav-link">Instructions</a>
-                    <a onclick="showPage('settings')" class="nav-link">Settings</a>" style="display:none;">Settings</a></li>
-            <li><a id="adminLink" onclick="showPage('admin')" style="display:none;">Admin</a></li>
+            <li><a onclick="showPage('beta')" class="nav-link">Beta</a></li>
+            <li><a onclick="showPage('instructions')" class="nav-link">Instructions</a></li>
+            <li><a onclick="showPage('settings')" class="nav-link" id="settingsNav" style="display:none;">Settings</a></li>
+            <li><a id="adminLink" onclick="showPage('admin')" class="nav-link" style="display:none;">Admin</a></li>
         </ul>
         <div class="nav-right">
             <div class="user-menu" id="userMenu" style="display:none;">
