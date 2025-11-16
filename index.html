@@ -137,6 +137,16 @@
             }
         }
 
+        .footer-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (min-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         .user-menu {
             display: flex;
             align-items: center;
@@ -1729,7 +1739,7 @@
     <!-- Footer -->
     <footer style="background: rgba(10, 14, 39, 0.95); border-top: 1px solid rgba(0, 212, 255, 0.1); padding: 3rem 2rem; margin-top: 4rem;">
         <div class="container" style="max-width: 1200px; margin: 0 auto;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2rem;" class="footer-grid">
                 <div>
                     <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Buy the Rip</h4>
                     <p style="font-size: 0.9rem; color: var(--text-secondary);">Professional momentum trading analysis powered by AI.</p>
