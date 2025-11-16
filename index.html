@@ -1088,6 +1088,11 @@
                 <button class="btn btn-primary" style="width: 100%;" onclick="submitBetaApplication()">Submit Application</button>
                 <div id="betaMessage" style="margin-top: 1rem;"></div>
             </div>
+            <div style="margin-top: 3rem; padding: 2rem; background: rgba(0, 212, 255, 0.1); border-radius: 12px; text-align: center;">
+                <h3 style="margin-bottom: 1rem;">Ready to Start Trading?</h3>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Get instant access to our stock analysis tool and start identifying momentum trades today.</p>
+                <button class="btn btn-primary" onclick="showPage('app')">Launch App Now</button>
+            </div>
         </div>
     </div>
 
@@ -1708,5 +1713,44 @@
             }
         }
     </script>
+
+    <!-- Footer -->
+    <footer style="background: rgba(10, 14, 39, 0.95); border-top: 1px solid rgba(0, 212, 255, 0.1); padding: 3rem 2rem; margin-top: 4rem;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Buy the Rip</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Professional momentum trading analysis powered by AI.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Product</h4>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li><a onclick="showPage('app')" style="color: var(--text-secondary); cursor: pointer; text-decoration: none;">App</a></li>
+                        <li><a onclick="showPage('beta')" style="color: var(--text-secondary); cursor: pointer; text-decoration: none;">Beta</a></li>
+                        <li><a onclick="showPage('settings')" style="color: var(--text-secondary); cursor: pointer; text-decoration: none;">Settings</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Legal</h4>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none;">Privacy</a></li>
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none;">Terms</a></li>
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">Follow</h4>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none;">Twitter</a></li>
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none;">Discord</a></li>
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none;">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(0, 212, 255, 0.1); padding-top: 2rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                <p>&copy; 2025 Buy the Rip. All rights reserved. | Disclaimer: Not financial advice. Trade at your own risk.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
