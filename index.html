@@ -801,8 +801,9 @@
         <ul class="nav-links" id="navLinks">
             <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
             <li><a onclick="showPage('app')" class="nav-link">App</a></li>
-            <li><a onclick="showPage('beta')" class="nav-link">Beta</a></li>
-            <li><a onclick="showPage('settings')" class="nav-link" id="settingsNav" style="display:none;">Settings</a></li>
+                    <a onclick="showPage('beta')" class="nav-link">Beta</a>
+                    <a onclick="showPage('instructions')" class="nav-link">Instructions</a>
+                    <a onclick="showPage('settings')" class="nav-link">Settings</a>" style="display:none;">Settings</a></li>
             <li><a id="adminLink" onclick="showPage('admin')" style="display:none;">Admin</a></li>
         </ul>
         <div class="nav-right">
@@ -1114,6 +1115,59 @@
                 <h3 style="margin-bottom: 1rem;">Ready to Start Trading?</h3>
                 <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Get instant access to our stock analysis tool and start identifying momentum trades today.</p>
                 <button class="btn btn-primary" onclick="showPage('app')">Launch App Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Page -->
+    <div id="instructions" class="page">
+        <div class="container">
+            <h2 style="margin-bottom: 2rem;">How It Works - Q&A</h2>
+            <div style="max-width: 800px;">
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent-cyan); border-radius: 8px;">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">What is the 5-Pillar Score?</h3>
+                    <p>Our proprietary scoring system evaluates stocks across 5 key momentum indicators. Each pillar is scored 0-100, and the overall score ranges from 0-100. A score of 70+ signals strong momentum potential. This is the same methodology used by professional day traders like Ross Cameron.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent-magenta); border-radius: 8px;">
+                    <h3 style="color: var(--accent-magenta); margin-bottom: 0.5rem;">What is MACD?</h3>
+                    <p>MACD (Moving Average Convergence Divergence) is a momentum indicator that shows the relationship between two moving averages. When MACD crosses above the signal line, it signals potential bullish momentum. When it crosses below, it signals bearish momentum. We flag MACD crossovers as key trading signals.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--success); border-radius: 8px;">
+                    <h3 style="color: var(--success); margin-bottom: 0.5rem;">What is RSI?</h3>
+                    <p>RSI (Relative Strength Index) measures momentum on a scale of 0-100. RSI above 70 indicates overbought conditions (potential pullback), while RSI below 30 indicates oversold conditions (potential bounce). We use RSI to confirm momentum strength and identify potential reversals.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--warning); border-radius: 8px;">
+                    <h3 style="color: var(--warning); margin-bottom: 0.5rem;">What is Volume Analysis?</h3>
+                    <p>High volume on up days confirms strong buying pressure. We analyze volume trends to confirm momentum moves. Stocks that gap up on heavy volume are more likely to sustain their gains. Low volume moves are often false breakouts.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent-cyan); border-radius: 8px;">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">What are Moving Averages?</h3>
+                    <p>Moving averages smooth out price action to show trends. The 20-day MA shows short-term trends, while the 50-day MA shows intermediate trends. When price is above both moving averages, it signals uptrend strength. When price crosses below, it signals weakness.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent-magenta); border-radius: 8px;">
+                    <h3 style="color: var(--accent-magenta); margin-bottom: 0.5rem;">What is Bagholder Risk?</h3>
+                    <p>Bagholder risk alerts flag stocks that have already moved 100%+ and are showing weakness. This is a warning to avoid buying at the top. If a stock has already had a massive run and is now declining, you're at risk of being a "bagholder" (holding a losing position).</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--success); border-radius: 8px;">
+                    <h3 style="color: var(--success); margin-bottom: 0.5rem;">What does Grade A/B/C mean?</h3>
+                    <p>Our grade system rates stocks A-F based on overall momentum strength. A = Excellent momentum (70+), B = Good momentum (60-69), C = Moderate momentum (50-59). Grades below C indicate weak momentum and should be avoided.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--warning); border-radius: 8px;">
+                    <h3 style="color: var(--warning); margin-bottom: 0.5rem;">How many lookups do I get?</h3>
+                    <p>Free tier users get 5 stock lookups per month. Premium subscribers get unlimited lookups. Each time you analyze a stock, it counts as one lookup. Upgrade to Premium to analyze as many stocks as you want.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent-cyan); border-radius: 8px;">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">What is a Catalyst?</h3>
+                    <p>A catalyst is a news event that drives stock movement. Earnings announcements, FDA approvals, partnership announcements, etc. We flag catalysts so you know the "why" behind the move. Stocks with positive catalysts have stronger momentum.</p>
+                </div>
             </div>
         </div>
     </div>
